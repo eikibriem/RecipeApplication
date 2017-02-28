@@ -10,8 +10,43 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.helen_000.recipeapplication.HomeScreenActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:text="Search"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/mHomeScreenSearchButton"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="21dp" />
+
+    <Button
+        android:text="Sign Up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mHomeScreenSignupButton"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/mHomeScreenLoginButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Recipe Groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mHomeScreenRecipeGroupsButton"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/mHomeScreenSearchButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mHomeScreenLoginButton"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/mHomeScreenRecipeGroupsButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
