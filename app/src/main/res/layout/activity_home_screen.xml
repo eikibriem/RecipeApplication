@@ -11,42 +11,45 @@
     tools:context="com.example.helen_000.recipeapplication.HomeScreenActivity">
 
     <Button
-        android:text="Search"
+        android:text="@string/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mHomeScreenSearchButton"
-        android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="21dp" />
+        android:layout_marginTop="21dp"
+        android:onClick="mHomeScreenSearchButtonOnClick"/>
 
     <Button
-        android:text="Sign Up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mHomeScreenSignupButton"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/mHomeScreenLoginButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Recipe Groups"
+        android:text="@string/recipeGroups"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mHomeScreenRecipeGroupsButton"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/mHomeScreenSearchButton"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="mHomeScreenRecipeGroupsButtonOnClick"/>
 
     <Button
-        android:text="Login"
+        android:text="@string/signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mHomeScreenSignupButton"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/mHomeScreenLoginButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="mHomeScreenSignupButtonOnClick"/>
+
+    <Button
+        android:text="@string/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mHomeScreenLoginButton"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/mHomeScreenRecipeGroupsButton"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="mHomeScreenLoginButtonOnClick"/>
 </RelativeLayout>
