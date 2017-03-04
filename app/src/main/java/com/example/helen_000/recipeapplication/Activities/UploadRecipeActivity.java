@@ -1,7 +1,9 @@
-package com.example.helen_000.recipeapplication;
+package com.example.helen_000.recipeapplication.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.helen_000.recipeapplication.R;
 
 public class UploadRecipeActivity extends AppCompatActivity {
 

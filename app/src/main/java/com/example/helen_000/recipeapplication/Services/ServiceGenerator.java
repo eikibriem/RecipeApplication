@@ -1,0 +1,93 @@
+package com.example.helen_000.recipeapplication.Services;
+
+
+import android.text.TextUtils;
+import java.io.IOException;
+
+
+import okhttp3.OkHttpClient;
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
+import retrofit2.Retrofit;
+import okhttp3.Credentials;
+
+import retrofit2.converter.gson.GsonConverterFactory;
+
+/**
+ * Created by helen_000 on 3.3.2017.
+ */
+
+public class ServiceGenerator {
+
+    private static final String BASE_URL = "https://raw.githubusercontent.com";
+    //private static final String BASE_URL = "http://10.0.2.2:8080";
+
+
+    /*private static Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();*/
+
+    /*private static Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL )
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();*/
+
+    /*public static <S> S createService(Class<S> serviceClass){
+
+        return retrofit.create(serviceClass);
+    }*/
+
+/// =====================================================================================
+
+
+
+
+
+    private static  OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+    private static Retrofit.Builder builder = new Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create());
+
+    private static Retrofit retrofit;
+
+    public static <S> S createService(Class<S> serviceClass){
+        return createService(serviceClass, null ,null);
+    }
+
+    public static <S> S createService(Class<S> serviceClass, String username, String password){
+        if (!TextUtils.isEmpty(username) && !(TextUtils.isEmpty(password))) {
+            String authToken = Credentials.basic(username,password);
+            return createService(serviceClass,authToken);
+        }
+        return createService(serviceClass,null);
+    }
+
+    public static <S> S createService(Class<S> serviceClass, final String authToken){
+        if(!TextUtils.isEmpty(authToken)){
+
+            httpClient.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request original = chain.request();
+                    Request.Builder requestBuilder = original.newBuilder()
+                            .header("Authorization",authToken);
+                    requestBuilder.header("Accept","application/json");
+                    requestBuilder.method(original.method(),original.body());
+
+                    Request request = requestBuilder.build();
+                    return chain.proceed(request);
+
+                }
+            });
+
+        }
+
+        builder.client(httpClient.build());
+        retrofit = builder.build();
+
+        return retrofit.create(serviceClass);
+    }
+
+}

@@ -1,12 +1,11 @@
-package com.example.helen_000.recipeapplication;
+package com.example.helen_000.recipeapplication.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 import android.content.Intent;
-import android.view.View.OnClickListener;
+
+import com.example.helen_000.recipeapplication.R;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
@@ -16,9 +15,6 @@ public class HomeScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
-
-
     }
    // Button mHomeScreenRecipeGroupsButton = (Button)findViewById(R.id.mHomeScreenRecipeGroupsButton);
 

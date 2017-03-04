@@ -1,4 +1,4 @@
-package com.example.helen_000.recipeapplication;
+package com.example.helen_000.recipeapplication.Entities;
 
 
 /**
@@ -10,7 +10,10 @@ public class Recipe {
     private String recipeName;
     private String recipeGroup;
     private String ingredients;
+
     //private User user;
+    private String username;
+
     private String instructions;
     private String image;
     private float rate;
@@ -33,7 +36,7 @@ public class Recipe {
     public String getRecipeGroup() {
         return recipeGroup;
     }
-    public void setRecipeName(String recipeGroup) {
+    public void setRecipeGroup(String recipeGroup) {
         this.recipeGroup = recipeGroup;
     }
 
@@ -42,6 +45,13 @@ public class Recipe {
     }
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getInstructions() {
