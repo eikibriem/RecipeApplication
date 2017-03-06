@@ -3,21 +3,25 @@
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.helen_000.recipeapplication.Entities.Recipe;
 import com.example.helen_000.recipeapplication.R;
 import com.example.helen_000.recipeapplication.RecipeFetch;
+import com.squareup.picasso.Picasso;
 
  public class RecipeActivity extends AppCompatActivity {
 
 
      private Long message;
+     ImageView image;
 
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        image = (ImageView)findViewById(R.id.imageView);
         AsyncTask task = new RecipeActivity.FetchRecipeTask().execute();
         Bundle bundle = getIntent().getExtras();
         message = bundle.getLong("message");
@@ -38,8 +42,8 @@ import com.example.helen_000.recipeapplication.RecipeFetch;
             mRecipe = recipe;
             TextView textViewRecipeName = (TextView) findViewById(R.id.textViewRecipeName);
             textViewRecipeName.setText(mRecipe.getRecipeName());
-           // ImageView imageView = (ImageView) findViewById(R.id.imageView);
-         //   imageView.setImageResource(mRecipe.getImage());
+
+            Picasso.with(RecipeActivity.this).load(mRecipe.getImage()).into(image);
 
             TextView textViewIngredients = (TextView) findViewById(R.id.textViewIngredients);
             textViewIngredients.setText(mRecipe.getIngredients());
