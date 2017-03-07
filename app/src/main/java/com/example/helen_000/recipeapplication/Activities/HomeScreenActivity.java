@@ -34,13 +34,10 @@ public class HomeScreenActivity extends AppCompatActivity {
         Intent intent = new Intent(HomeScreenActivity.this, RecipeGroupActivity.class);
         startActivity(intent);
     }
-/*
-    mHomeScreenRecipeGroupsButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            startActivity(new Intent(HomeScreenActivity.this, RecipeGroupActivity.class));
-            finish();
-        }
-    });
-*/
+
+    public void mHomeScreenCreateRecipeButtonOnClick (View v){
+        Intent intent = new Intent(HomeScreenActivity.this, UploadRecipeActivity.class);
+        startActivity(intent);
+    }
+
 }

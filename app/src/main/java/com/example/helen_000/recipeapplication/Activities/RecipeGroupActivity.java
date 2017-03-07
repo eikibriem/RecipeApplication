@@ -31,26 +31,7 @@ public class RecipeGroupActivity extends AppCompatActivity {
     }
 
     private Recipe mRecipe = new Recipe();
-/*
-    private class FetchRecipeTask extends AsyncTask<Void, Void, Recipe> {
-        @Override
-        protected Recipe doInBackground(Void... params ){
-            Recipe recipe = new RecipeFetch().fetchRecipe(110);
-            return recipe;
-        }
 
-        @Override
-        protected void onPostExecute(Recipe recipe) {
-            mRecipe = recipe;
-            Log.v(TAG, "ÉG ER HÉR! ---" + mRecipe.getRecipeName());
-            TextView textView2 = (TextView) findViewById(R.id.textView2);
-            textView2.setText(mRecipe.getRecipeName());
-           // ImageView imageView = (ImageView) findViewById(R.id.imageView);
-         //   imageView.setImageResource(mRecipe.getImage());
-
-            //setupAdapter(); //handles displaying the recipes
-        }
-    }*/
 
     private List<RecipeGroup> mRecipeGroups = new ArrayList<RecipeGroup>();
 
