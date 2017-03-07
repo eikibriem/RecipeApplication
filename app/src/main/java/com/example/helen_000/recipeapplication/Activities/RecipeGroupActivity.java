@@ -30,9 +30,6 @@ public class RecipeGroupActivity extends AppCompatActivity {
         AsyncTask task = new FetchRecipeGroupsTask().execute();
     }
 
-    private Recipe mRecipe = new Recipe();
-
-
     private List<RecipeGroup> mRecipeGroups = new ArrayList<RecipeGroup>();
 
     private class FetchRecipeGroupsTask extends AsyncTask<Void, Void, List<RecipeGroup>> {

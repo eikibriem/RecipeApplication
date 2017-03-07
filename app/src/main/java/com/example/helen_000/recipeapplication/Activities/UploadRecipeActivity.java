@@ -11,7 +11,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.helen_000.recipeapplication.Entities.Recipe;
+import com.example.helen_000.recipeapplication.Entities.RecipeGroup;
 import com.example.helen_000.recipeapplication.R;
+import com.example.helen_000.recipeapplication.RecipeGroupFetch;
+import com.example.helen_000.recipeapplication.RecipeSave;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +29,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UploadRecipeActivity extends AppCompatActivity {
 
@@ -109,18 +114,18 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
         JSONObject recipeData = new JSONObject();
         try {
+
             recipeData.put("recipeName", recipeName);
+
             recipeData.put("recipeGroup", recipeGroup);
             recipeData.put("ingredients", ingredients);
             recipeData.put("instructions", instructions);
             recipeData.put("rate", 0);
             recipeData.put("image", image);
-            //recipeData.put("username", username);
 
-           // Log.d(TAG,"Recipe Hluturinn: " + recipeData.getString(recipeName));
             Log.d(TAG,"Recipe Hluturinn: " + recipeData.toString());
-
-            new SendRecipeDeviceDetails().execute("http://10.0.2.2:8080/m/createRecipe", recipeData.toString());
+            Log.d(TAG, "Hellú" + recipeData.toString());
+            new saveRecipeTask().execute(recipeData.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -128,6 +133,22 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
     }
 
+    private class saveRecipeTask extends AsyncTask<String, Void, Recipe> {
+        @Override
+        protected Recipe doInBackground(String... params) {
+            //data: params[1]
+            Recipe recipe = null;
+            try {
+                Log.d(TAG, "Hellú");
+                recipe = new RecipeSave().saveRecipe(params[0]);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return recipe;
+        }
+    }
+
+/*
     private class SendRecipeDeviceDetails extends AsyncTask<String, Void, String> {
 
         @Override
@@ -153,9 +174,8 @@ public class UploadRecipeActivity extends AppCompatActivity {
                 wr.close();
 
                 Log.d(TAG,"Ég er hér7");
-
                 InputStream in = httpURLConnection.getInputStream();
-                Log.d(TAG,"Ég er hér7,7");
+                Log.d(TAG,"Ég er hér7,5");
                 InputStreamReader inputStreamReader = new InputStreamReader(in);
 
                 Log.d(TAG,"Ég er hér8");
@@ -186,78 +206,6 @@ public class UploadRecipeActivity extends AppCompatActivity {
             Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
         }
     }
-
-
-
-
-
-
-    /*
-    class SendRecipeDataToServer extends AsyncTask<String,String,String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String JsonResponse = null;
-            String JsonDATA = params[0];
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-            try {
-                URL url = new URL("http://10.0.2.2:8080/m/createRecipe/");
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setDoOutput(true);
-
-                // is output buffer writter
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setRequestProperty("Content-Type", "application/json");
-                urlConnection.setRequestProperty("Accept", "application/json");
-
-                //set headers and method
-                Writer writer = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream(), "UTF-8"));
-                writer.write(JsonDATA);
-
-                // json data
-                writer.close();
-                InputStream inputStream = urlConnection.getInputStream();
-
-                //input stream
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    // Nothing to do.
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String inputLine;
-                while ((inputLine = reader.readLine()) != null)
-                    buffer.append(inputLine + "\n");
-                if (buffer.length() == 0) {
-                    // Stream was empty. No point in parsing.
-                    return null;
-                }
-                JsonResponse = buffer.toString();
-                //response data
-                Log.i(TAG,JsonResponse);
-                //send to post execute
-                return JsonResponse;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(TAG, "Error closing stream", e);
-                    }
-                }
-            }
-            return null;
-        }
-    }
-    */
-
+*/
 }
 

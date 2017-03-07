@@ -23,15 +23,15 @@ public class HomeScreenActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void mHomeScreenSearchButtonOnClick (View v){
-        Intent intent = new Intent(HomeScreenActivity.this, RecipeGroupActivity.class);
+        Intent intent = new Intent(HomeScreenActivity.this, SearchActivity.class);
         startActivity(intent);
     }
     public void mHomeScreenLoginButtonOnClick (View v){
-        Intent intent = new Intent(HomeScreenActivity.this, RecipeGroupActivity.class);
+        Intent intent = new Intent(HomeScreenActivity.this, LoginActivity.class);
         startActivity(intent);
     }
     public void mHomeScreenSignupButtonOnClick (View v){
-        Intent intent = new Intent(HomeScreenActivity.this, RecipeGroupActivity.class);
+        Intent intent = new Intent(HomeScreenActivity.this, SignupActivity.class);
         startActivity(intent);
     }
 

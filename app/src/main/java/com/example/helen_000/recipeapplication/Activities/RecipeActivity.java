@@ -23,8 +23,8 @@ import com.squareup.picasso.Picasso;
         setContentView(R.layout.activity_recipe);
         image = (ImageView)findViewById(R.id.imageView);
         AsyncTask task = new RecipeActivity.FetchRecipeTask().execute();
-        Bundle bundle = getIntent().getExtras();
-        message = bundle.getLong("message");
+        Bundle bundle = getIntent().getExtras(); //getting the id of the recipe from the recipeListActivity
+        message = bundle.getLong("message"); //getting the id of the recipe from the recipeListActivity
     }
 
 
