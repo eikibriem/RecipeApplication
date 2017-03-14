@@ -139,7 +139,6 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
     @Override
     public void onValidationSucceeded() {
         Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
-        BCryptPasswordEncoder
         User user = new User();
         user.setName(nameEdit.getText().toString());
         user.setUsername(usernameEdit.getText().toString());
