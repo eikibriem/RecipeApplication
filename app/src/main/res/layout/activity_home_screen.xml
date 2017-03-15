@@ -32,12 +32,25 @@
         android:onClick="mHomeScreenRecipeGroupsButtonOnClick"/>
 
     <Button
+        android:text="@string/mypage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mHomeScreenMyPageButton"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/mHomeScreenRecipeGroupsButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="mHomeScreenMyPageButtonOnClick"/>
+
+
+
+    <Button
         android:text="@string/signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mHomeScreenSignupButton"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/mHomeScreenLoginButton"
+        android:layout_below="@+id/mHomeScreenMyPageButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="mHomeScreenSignupButtonOnClick"/>
@@ -48,7 +61,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/mHomeScreenLoginButton"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/mHomeScreenRecipeGroupsButton"
+        android:layout_below="@+id/mHomeScreenSignupButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="mHomeScreenLoginButtonOnClick"/>
@@ -57,9 +70,19 @@
         android:text="Create Recipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mHomeScreenSignupButton"
+        android:layout_below="@+id/mHomeScreenLoginButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/buttonCreateRecipe"
         android:onClick="mHomeScreenCreateRecipeButtonOnClick" />
+
+    <Button
+        android:text="@string/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonCreateRecipe"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/mHomeScreenLogOutButton"
+        android:onClick="mHomeScreenLogOutButtonOnClick" />
 </RelativeLayout>

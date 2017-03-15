@@ -1,6 +1,7 @@
 package com.example.helen_000.recipeapplication.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -138,7 +139,6 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationSucceeded() {
-        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
         User user = new User();
         user.setName(nameEdit.getText().toString());
         user.setUsername(usernameEdit.getText().toString());

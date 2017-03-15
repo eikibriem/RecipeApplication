@@ -18,4 +18,6 @@
     <string name="signup">Signup</string>
     <string name="recipeGroups">Recipe Groups</string>
     <string name="search">Search</string>
+    <string name="mypage">My Page</string>
+    <string name="logout">Log Out</string>
 </resources>
