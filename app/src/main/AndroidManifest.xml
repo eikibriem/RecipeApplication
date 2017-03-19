@@ -30,7 +30,7 @@
         <activity android:name=".Activities.SearchActivity" />
         <activity android:name=".Activities.ForgotPasswordActivity" />
         <activity android:name=".Activities.UserPageActivity" />
-        <activity android:name=".Activities.ResetPasswordActivity" />
+        <activity android:name=".Activities.ChangePasswordActivity" />
         <activity android:name=".Activities.EditUserInfoActivity" />
         <activity android:name=".Activities.SignupActivity" />
         <activity

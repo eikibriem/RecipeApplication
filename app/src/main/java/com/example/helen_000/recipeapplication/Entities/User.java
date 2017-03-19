@@ -13,6 +13,7 @@ public class User {
     private String userName;
     private String password;
     private String passwordConfirm;
+    private String oldPassword;
     private String email;
 
     public String getName(){
@@ -52,5 +53,13 @@ public class User {
 
     public void setEmail(String email){
         this.email = email;
+    }
+
+    public String getOldPassword(){
+        return this.oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword){
+        this.oldPassword = oldPassword;
     }
 }
