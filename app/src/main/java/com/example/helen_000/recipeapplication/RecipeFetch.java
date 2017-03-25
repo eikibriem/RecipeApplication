@@ -57,7 +57,6 @@ public class RecipeFetch {
             if(conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(conn.getResponseMessage() + ": with " + urlSpec);
             }
-
             //InputStream in = conn.getInputStream();
             StringBuilder sb = new StringBuilder();
             reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));

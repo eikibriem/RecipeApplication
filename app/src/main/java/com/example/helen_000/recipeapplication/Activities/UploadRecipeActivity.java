@@ -5,26 +5,37 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.helen_000.recipeapplication.CreateRecipeSend;
+import com.example.helen_000.recipeapplication.Entities.LoginUser;
 import com.example.helen_000.recipeapplication.Entities.Recipe;
 import com.example.helen_000.recipeapplication.Entities.RecipeGroup;
 import com.example.helen_000.recipeapplication.R;
+import com.example.helen_000.recipeapplication.RecipeFetchId;
 import com.example.helen_000.recipeapplication.RecipeGroupFetch;
 import com.example.helen_000.recipeapplication.RecipeSave;
+import com.example.helen_000.recipeapplication.SignupSend;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
@@ -32,18 +43,42 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UploadRecipeActivity extends AppCompatActivity {
+public class UploadRecipeActivity extends AppCompatActivity implements Validator.ValidationListener{
 
     private static final String TAG = "CreateRecipe";
+    private Long message;
+
+    @NotEmpty
+    private EditText recipeNameEdit;
+    private Spinner recipeGroupEdit;
+    @NotEmpty
+    private EditText ingredientsEdit;
+    @NotEmpty
+    private EditText instructionsEdit;
+    @NotEmpty
+    private EditText imageEdit;
+
+    private Validator validator;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_recipe);
         Spinner dropdown = (Spinner)findViewById(R.id.spinnerRecipeGroup);
-        String[] items = new String[]{"Appetizer", "Baking", "Breakfast", "Dinner", "Dessert", "Raw"};
+        String[] items = new String[]{"appetizers", "baking", "breakfast", "dinner", "dessert", "raw"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+
+        this.validator = new Validator(this);
+        this.validator.setValidationListener(this);
+        this.recipeNameEdit = (EditText) findViewById(R.id.editTextRecipeName);
+        this.recipeGroupEdit = (Spinner)findViewById(R.id.spinnerRecipeGroup);
+        this.ingredientsEdit = (EditText) findViewById(R.id.editTextIngredients);
+        this.instructionsEdit = (EditText) findViewById(R.id.editTextInstructions);
+        this.imageEdit = (EditText) findViewById(R.id.editTextImage);
+
+
     }
 
     public String getRecipeName(View v){
@@ -89,123 +124,133 @@ public class UploadRecipeActivity extends AppCompatActivity {
         Log.d("AddImage","image:  "+image);
 
         return imageValue;
+
     }
 
     public void mButtonSaveRecipeOnClick (View v){
-
-        String recipeName = getRecipeName(v);
-        String recipeGroup = getRecipeGroupView(v);
-        String ingredients = getIngredients(v);
-        String instructions = getInstructions(v);
-        String image = getImage(v);
-        //String username = getUsername(v);
-
-       /* Recipe recipe = new Recipe();
-        recipe.setRecipeName(recipeName);
-        recipe.setRecipeGroup(recipeGroup);
-        recipe.setIngredients(ingredients);
-        recipe.setInstructions(instructions);
-        recipe.setRate(0);
-        recipe.setImage(image);
-        //recipe.setUsername(??Sækja username??);
-        */
-
-        Log.d(TAG,"Recipe Hluturinn: " + recipeName);
-
-        JSONObject recipeData = new JSONObject();
-        try {
-
-            recipeData.put("recipeName", recipeName);
-
-            recipeData.put("recipeGroup", recipeGroup);
-            recipeData.put("ingredients", ingredients);
-            recipeData.put("instructions", instructions);
-            recipeData.put("rate", 0);
-            recipeData.put("image", image);
-
-            Log.d(TAG,"Recipe Hluturinn: " + recipeData.toString());
-            Log.d(TAG, "Hellú" + recipeData.toString());
-            new saveRecipeTask().execute(recipeData.toString());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        validator.validate();
     }
 
-    private class saveRecipeTask extends AsyncTask<String, Void, Recipe> {
+
+
+
+    private class SendRecipeDeviceDetails extends AsyncTask<Recipe, Void, String> {
+
         @Override
-        protected Recipe doInBackground(String... params) {
-            //data: params[1]
-            Recipe recipe = null;
-            try {
-                Log.d(TAG, "Hellú");
-                recipe = new RecipeSave().saveRecipe(params[0]);
-            } catch (JSONException e) {
-                e.printStackTrace();
+        protected String doInBackground(Recipe... recipes) {
+
+            if(recipes.length > 0){
+                String message1 = new CreateRecipeSend().sendRecipe(recipes[0]);
+
+
+                RecipeFetchId rp = new RecipeFetchId();
+                Recipe RecipeidNew = rp.fetchRecipeId(recipes[0].getRecipeName());
+                Long idNew = RecipeidNew.getId();
+                message = idNew;
+
+
+                return message1;
             }
-            return recipe;
-        }
-    }
+            return "Doesnt work, there is no recipe";
 
-/*
-    private class SendRecipeDeviceDetails extends AsyncTask<String, Void, String> {
+        }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected void onPostExecute(String response) {
+            super.onPostExecute(response);
+            Log.d(TAG, "hellóúú from the postExecute");
+            Log.e("TAG", response); // this is expecting a response code to be sent from your server upon receiving the POST data
 
-            String data = "";
-            Log.d(TAG,"Ég er hér1");
-            HttpURLConnection httpURLConnection = null;
-            try {
-                Log.d(TAG,"Ég er hér2");
-                httpURLConnection = (HttpURLConnection) new URL(params[0]).openConnection();
-                Log.d(TAG,"Ég er hér3");
-                httpURLConnection.setRequestMethod("POST");
-                Log.d(TAG,"Ég er hér4");
+            Log.d(TAG,response.toString());
+            if("OK".equals(response)){
 
-                httpURLConnection.setDoOutput(true);
+                Toast toast = Toast.makeText(UploadRecipeActivity.this ,"Upload successful", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
 
-                Log.d(TAG,"Ég er hér5");
-                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-                Log.d(TAG,"Ég er hér6");
-                wr.writeBytes("PostData=" + params[1]);
-                wr.flush();
-                wr.close();
 
-                Log.d(TAG,"Ég er hér7");
-                InputStream in = httpURLConnection.getInputStream();
-                Log.d(TAG,"Ég er hér7,5");
-                InputStreamReader inputStreamReader = new InputStreamReader(in);
 
-                Log.d(TAG,"Ég er hér8");
+                Log.d(TAG, "Messagið þitt er hér: " + message);
 
-                int inputStreamData = inputStreamReader.read();
+                Intent intent = new Intent(UploadRecipeActivity.this, RecipeActivity.class);
+                intent.putExtra("message",  message);
 
-                Log.d(TAG,"Ég er hér9");
-                while (inputStreamData != -1) {
-                    char current = (char) inputStreamData;
-                    inputStreamData = inputStreamReader.read();
-                    Log.d(TAG,"Ég er hér10");
-                    data += current;
-                    Log.d(TAG, "HALLÓÓÓÓÓ!! + " + data + " + " + current);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (httpURLConnection != null) {
-                    httpURLConnection.disconnect();
+                startActivity(intent);
+            }
+            else{
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getJSONArray("recipeName").length() > 0){
+                        for(int i=0; i < jsonObject.getJSONArray("recipeName").length(); i++){
+                            String errorMessage = jsonObject.getJSONArray("recipeName").getString(i);
+                            recipeNameEdit.setError(errorMessage);
+                        }
+                    }
+
+                    if(jsonObject.getJSONArray("ingredients").length() > 0){
+                        for(int i=0; i < jsonObject.getJSONArray("ingredients").length(); i++){
+                            String errorMessage = jsonObject.getJSONArray("ingredients").getString(i);
+                            ingredientsEdit.setError(errorMessage);
+                        }
+                    }
+
+                    if(jsonObject.getJSONArray("instructions").length() > 0){
+                        for(int i=0; i < jsonObject.getJSONArray("instructions").length(); i++){
+                            String errorMessage = jsonObject.getJSONArray("instructions").getString(i);
+                            instructionsEdit.setError(errorMessage);
+                        }
+                    }
+
+                    if(jsonObject.getJSONArray("image").length() > 0){
+                        for(int i=0; i < jsonObject.getJSONArray("image").length(); i++){
+                            String errorMessage = jsonObject.getJSONArray("image").getString(i);
+                            imageEdit.setError(errorMessage);
+                        }
+                    }
+
+
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error when handling json");
+                    Toast toast = Toast.makeText(UploadRecipeActivity.this, "Upload not successful, try again later", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                    e.printStackTrace();
                 }
             }
-            return data;
+        }
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
+
+    @Override
+    public void onValidationSucceeded() {
+        Recipe recipe = new Recipe();
+        recipe.setRecipeName(recipeNameEdit.getText().toString());
+        recipe.setRecipeGroup(recipeGroupEdit.getSelectedItem().toString());
+        recipe.setIngredients(ingredientsEdit.getText().toString());
+        recipe.setInstructions(instructionsEdit.getText().toString());
+        recipe.setImage(imageEdit.getText().toString());
+
+        String loggedInUser = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).getString("userName", "No logged in user");
+        recipe.setUsername(loggedInUser);
+
+        new SendRecipeDeviceDetails().execute(recipe);
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
         }
     }
-*/
+
 }
 

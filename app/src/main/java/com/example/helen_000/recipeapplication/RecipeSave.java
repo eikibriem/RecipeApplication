@@ -26,13 +26,9 @@ public class RecipeSave {
 
     public Recipe saveRecipe(String recipeData) throws JSONException {
         Recipe recipe = new Recipe();
-        Log.d(TAG, "Hellú22" + recipeData);
-        Log.d(TAG, "Hellú22" + recipeData);
         String recipeData1 = "[" + recipeData + "]";
         JSONArray jsonBody = new JSONArray(recipeData1);
-        Log.d(TAG, "Hellú222");
         JSONObject recipeObject = jsonBody.getJSONObject(0);
-        Log.d(TAG, "Hellú2222");
 
         String recipeName = recipeObject.getString("recipeName");
         String recipeGroup = recipeObject.getString("recipeGroup");
@@ -48,9 +44,9 @@ public class RecipeSave {
 
         Log.d(TAG, "HOLA!!" + recipeName + " - " + recipeGroup + " - " + ingredients + " - " + instructions + " - " + image);
 
-       // , String recipeGroup, String ingredients, String instructions, String image
         try {
-            String url = Uri.parse("http://10.0.2.2:8080/m/createRecipe/" + recipeName + "/" + recipeGroup + "/" + ingredients + "/" + instructions + "/" + image)
+          String url = Uri.parse("http://10.0.2.2:8080/m/createRecipe/" + recipeName + "/" + recipeGroup + "/" + ingredients + "/" + instructions + "/" + image)
+        //    String url = Uri.parse("http://10.0.2.2:8080/m/createRecipe/anything")
                     .buildUpon()
                     .build().toString();
             String jsonString = setData(url);
@@ -71,11 +67,11 @@ public class RecipeSave {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             Log.d(TAG, "hæ4 :)");
-
+/*
             if(conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(conn.getResponseMessage() + ": with " + urlSpec);
             }
-
+*/
             //InputStream in = conn.getInputStream();
             StringBuilder sb = new StringBuilder();
 
@@ -114,7 +110,6 @@ public class RecipeSave {
             recipe.setIngredients(jsonBody.getString("ingredients"));
             recipe.setInstructions(jsonBody.getString("instructions"));
             recipe.setUsername(jsonBody.getString("username"));
-            //recipe.setRate(jsonBody.getString("rate"));
             recipe.setImage(jsonBody.getString("image"));
 
         } catch (JSONException je) {
