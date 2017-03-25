@@ -61,11 +61,6 @@ public class RecipeGroupActivity extends AppCompatActivity {
             Button buttonRaw = (Button) findViewById(R.id.mButtonRaw);
             buttonRaw.setText(mRecipeGroups.get(5).getGroupName());
 
-
-            // ImageView imageView = (ImageView) findViewById(R.id.imageView);
-            //   imageView.setImageResource(mRecipe.getImage());
-
-            //setupAdapter(); //handles displaying the recipes
         }
     }
 
@@ -92,13 +87,15 @@ public class RecipeGroupActivity extends AppCompatActivity {
 
     public void mButtonDinnerButtonOnClick (View v){
         Intent intent = new Intent(RecipeGroupActivity.this, RecipeListActivity.class);
-        String message = "dinners";
+        String message = "dinner";
         intent.putExtra("message",  message);
         startActivity(intent);
     }
 
     public void mButtonDessertButtonOnClick (View v){
         Intent intent = new Intent(RecipeGroupActivity.this, RecipeListActivity.class);
+        String message = "dessert";
+        intent.putExtra("message",  message);
         startActivity(intent);
     }
 

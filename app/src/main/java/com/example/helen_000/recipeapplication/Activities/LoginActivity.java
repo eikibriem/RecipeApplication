@@ -101,6 +101,8 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
                 Intent intent = new Intent(LoginActivity.this, HomeScreenActivity.class);
+                Log.d(TAG, "GilmoreGirlsÁHomeScreen: " + usernameEdit.getText().toString());
+                intent.putExtra("userName", usernameEdit.getText().toString());
                 startActivity(intent);
             }
             else {

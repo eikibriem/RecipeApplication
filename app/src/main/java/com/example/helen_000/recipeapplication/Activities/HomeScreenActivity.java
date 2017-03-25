@@ -3,6 +3,7 @@ package com.example.helen_000.recipeapplication.Activities;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
@@ -10,8 +11,9 @@ import android.widget.Button;
 import com.example.helen_000.recipeapplication.R;
 
 public class HomeScreenActivity extends AppCompatActivity {
+    private String TAG = "HomeScreenActivity";
 
-
+    private String loggedInUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

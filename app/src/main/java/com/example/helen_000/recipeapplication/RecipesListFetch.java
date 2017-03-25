@@ -30,12 +30,10 @@ public class RecipesListFetch {
     public List<Recipe> fetchRecipeList(String message) {
         List<Recipe> recipes = new ArrayList<Recipe>();
         try {
-            String url = Uri.parse("http://10.0.2.2:8080/m/recipe" + message)
+            String url = Uri.parse("http://10.0.2.2:8080/m/recipe/" + message)
                     .buildUpon()
                     .build().toString();
             String jsonString = getData(url);
-            //  String jsonStringWithLastCharachter = jsonStringUnTrimmed.substring(1);
-            //String jsonString = jsonStringWithLastCharachter.substring(0,jsonStringWithLastCharachter.length()-1);
 
             Log.i(TAG, "Received JSON: " + jsonString);
 
