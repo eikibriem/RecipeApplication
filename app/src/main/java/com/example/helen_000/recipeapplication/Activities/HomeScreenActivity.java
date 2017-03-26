@@ -38,7 +38,9 @@ public class HomeScreenActivity extends AppCompatActivity {
         }
 
     }
-   // Button mHomeScreenRecipeGroupsButton = (Button)findViewById(R.id.mHomeScreenRecipeGroupsButton);
+    @Override
+    public void onBackPressed() {
+    }
 
     public void mHomeScreenRecipeGroupsButtonOnClick (View v){
         Intent intent = new Intent(HomeScreenActivity.this, RecipeGroupActivity.class);

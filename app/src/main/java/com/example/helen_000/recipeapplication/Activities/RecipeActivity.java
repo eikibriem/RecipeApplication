@@ -91,7 +91,7 @@ import com.squareup.picasso.Picasso;
 
          @Override
          protected void onPostExecute(String returnMessage) {
-             Intent intent = new Intent(RecipeActivity.this, RecipeGroupActivity.class);
+             Intent intent = new Intent(RecipeActivity.this, HomeScreenActivity.class);
              startActivity(intent);
              finish();
          }

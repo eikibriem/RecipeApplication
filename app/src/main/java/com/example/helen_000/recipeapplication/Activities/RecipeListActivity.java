@@ -25,6 +25,7 @@ public class RecipeListActivity extends AppCompatActivity {
     private static final String TAG = "MyActivity";
     private String message;
     private String loggedInUser;
+    boolean ContainsRecipeGroupInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,28 +36,24 @@ public class RecipeListActivity extends AppCompatActivity {
         message = bundle.getString("message");
 
         //Athugum hvort verið er að leita eftir notanda eða recipeGroup
-        boolean ContainsRecipeGroupInfo = messageContainsRecipeGroup(message);
-        Log.d(TAG, "Hellóóóó" + ContainsRecipeGroupInfo);
-        Log.d(TAG, "Hellóóóó" + message);
+        ContainsRecipeGroupInfo = messageContainsRecipeGroup(message);
 
         //Leitað eftir notanda
         if (ContainsRecipeGroupInfo == false){
-            Log.d(TAG, "Ég fór hingað1");
             AsyncTask task = new RecipeListActivity.FetchYourRecipeListTask().execute();
         }
         //Leitað eftir recipeGroup
         else {
-            Log.d(TAG, "Ég fór hingað2");
             AsyncTask task = new RecipeListActivity.FetchRecipeListTask().execute();
-            Log.d(TAG, "Valinn hópur: " + message);
         }
     }
+
 
     /*
        Checks if the message includes information about a recipe group
      */
     public static boolean messageContainsRecipeGroup(String message) {
-        Log.d(TAG, "messagið: " + message);
+
         List<String> recipeGroups = new ArrayList<String>();
         recipeGroups.add(0, "appetizers");
         recipeGroups.add(1, "dinner");
@@ -83,7 +80,6 @@ public class RecipeListActivity extends AppCompatActivity {
 
         @Override
         protected List<Recipe> doInBackground(String... params ){
-            Log.d(TAG, "Valinn hópur AFTUR: " + message);
             List<Recipe> recipes = new RecipesListFetch().fetchRecipeList(message);
             return recipes;
         }
@@ -98,7 +94,7 @@ public class RecipeListActivity extends AppCompatActivity {
 
             for(int i = 0; i < recipes.size(); i++){
                 myButtons[i] = new Button(RecipeListActivity.this);
-                Log.d(TAG, "Hér er ég: " + mRecipes.get(i).getRecipeName());
+
                 myButtons[i].setText(mRecipes.get(i).getRecipeName());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.setMargins(20, 0, 20, 20); // (left, top, right, bottom)

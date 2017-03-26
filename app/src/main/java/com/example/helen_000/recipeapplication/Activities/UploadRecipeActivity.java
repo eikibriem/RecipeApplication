@@ -215,24 +215,18 @@ public class UploadRecipeActivity extends AppCompatActivity implements Validator
         @Override
         protected void onPostExecute(String response) {
             super.onPostExecute(response);
-            Log.d(TAG, "hellóúú from the postExecute");
+
             Log.e("TAG", response); // this is expecting a response code to be sent from your server upon receiving the POST data
 
             Log.d(TAG,response.toString());
             if("OK".equals(response)){
 
-                Toast toast = Toast.makeText(UploadRecipeActivity.this ,"Upload successful", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-
-
-
-                Log.d(TAG, "Messagið þitt er hér: " + message);
-
                 Intent intent = new Intent(UploadRecipeActivity.this, RecipeActivity.class);
                 intent.putExtra("message",  message);
 
                 startActivity(intent);
+                finish();
+
             }
             else{
                 try {
@@ -322,7 +316,7 @@ public class UploadRecipeActivity extends AppCompatActivity implements Validator
 
         @Override
         protected void onPostExecute(String returnMessage) {
-            Intent intent = new Intent(UploadRecipeActivity.this, RecipeGroupActivity.class);
+            Intent intent = new Intent(UploadRecipeActivity.this, HomeScreenActivity.class);
             startActivity(intent);
         }
     }
