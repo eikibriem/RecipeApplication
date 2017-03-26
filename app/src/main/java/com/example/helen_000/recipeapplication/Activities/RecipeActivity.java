@@ -93,6 +93,7 @@ import com.squareup.picasso.Picasso;
          protected void onPostExecute(String returnMessage) {
              Intent intent = new Intent(RecipeActivity.this, RecipeGroupActivity.class);
              startActivity(intent);
+             finish();
          }
      }
 

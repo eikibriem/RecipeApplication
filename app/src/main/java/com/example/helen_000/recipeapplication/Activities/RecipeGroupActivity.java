@@ -1,11 +1,17 @@
 package com.example.helen_000.recipeapplication.Activities;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,9 +31,12 @@ public class RecipeGroupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_group);
         AsyncTask task = new FetchRecipeGroupsTask().execute();
+
+
     }
 
     private List<RecipeGroup> mRecipeGroups = new ArrayList<RecipeGroup>();
@@ -105,6 +114,7 @@ public class RecipeGroupActivity extends AppCompatActivity {
         intent.putExtra("message",  message);
         startActivity(intent);
     }
+
 
 }
 

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -25,30 +30,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
         android:id="@+id/imageView"
         android:layout_below="@+id/textViewRecipeName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Ingredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewIngredientsCaption"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textStyle="bold"
-        android:layout_marginTop="47dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp" />
 
     <TextView
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewIngredients"
-        android:layout_below="@+id/textViewIngredientsCaption"
+        android:id="@+id/textViewUsername"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/mDeleteRecipe"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -57,10 +51,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewInstructionsCaption"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
         android:textStyle="bold"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/textViewIngredients"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="58dp" />
 
     <TextView
         android:text="TextView"
@@ -72,35 +67,47 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="Edit Recipe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mEditRecipe"
-        android:onClick="mEditRecipeButtonOnClick"
-        android:layout_marginTop="22dp"
-        android:layout_below="@+id/textViewInstructions"
-        android:layout_alignParentLeft="true"
-        android:visibility="invisible"
-        android:layout_alignParentStart="true" />
-
-    <Button
         android:text="Delete Recipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mDeleteRecipe"
         android:onClick="mDeleteRecipeButtonOnClick"
+        android:visibility="invisible"
         android:layout_below="@+id/mEditRecipe"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Edit Recipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mEditRecipe"
+        android:onClick="mEditRecipeButtonOnClick"
+        android:layout_marginTop="35dp"
         android:visibility="invisible"
+        android:layout_below="@+id/textViewInstructions"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewUsername"
-        android:layout_below="@+id/mDeleteRecipe"
+        android:id="@+id/textViewIngredients"
+        android:layout_below="@+id/textViewIngredientsCaption"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp" />
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewIngredientsCaption"
+        android:textStyle="bold"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
+
+</ScrollView>
