@@ -63,6 +63,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     public void mHomeScreenCreateRecipeButtonOnClick (View v){
         Intent intent = new Intent(HomeScreenActivity.this, UploadRecipeActivity.class);
+        intent.putExtra("operation", 0L);
         startActivity(intent);
     }
 

@@ -28,6 +28,7 @@ public class RecipeFetch {
     private static final String TAG = "RecipeFetch";
 
     public Recipe fetchRecipe(Long recipeId) {
+
         Recipe recipe = new Recipe();
         try {
             String url = Uri.parse("http://10.0.2.2:8080/m/recipes/" + recipeId)
@@ -38,6 +39,7 @@ public class RecipeFetch {
 
             JSONObject jsonBody = new JSONObject(jsonString);
             parseRecipe(recipe, jsonBody);
+
 
         }catch (IOException ioe) {
             Log.e(TAG, "Failed to fetch recipes", ioe);
@@ -54,6 +56,7 @@ public class RecipeFetch {
         try {
             URL url = new URL(urlSpec);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
             if(conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(conn.getResponseMessage() + ": with " + urlSpec);
             }
@@ -88,6 +91,7 @@ public class RecipeFetch {
     private void parseRecipe(Recipe recipe, JSONObject jsonBody)
             throws JSONException {
         try {
+
             recipe.setId(jsonBody.getLong("id"));
             recipe.setRecipeName(jsonBody.getString("recipeName"));
             recipe.setRecipeGroup(jsonBody.getString("recipeGroup"));

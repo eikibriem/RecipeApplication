@@ -66,14 +66,9 @@ import com.squareup.picasso.Picasso;
             String loggedInUser = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).getString("userName", "No logged in user");
             String recipeUser = mRecipe.getUsername();
 
-            Log.d(TAG, "123 " + loggedInUser);
-            Log.d(TAG, "123 " + recipeUser);
 
             //If the loggedInUser is the same as the recipeUser we display the delete and edit recipe buttons
             if (loggedInUser.equals(recipeUser)) {
-                Log.d(TAG, "Komst hingað!");
-
-
                 buttonEditRecipe.setVisibility(View.VISIBLE);
                 buttonDeleteRecipe.setVisibility(View.VISIBLE);
             }
@@ -83,7 +78,6 @@ import com.squareup.picasso.Picasso;
      public void mDeleteRecipeButtonOnClick (View v){
 
          AsyncTask task = new RecipeActivity.DeleteRecipeTask().execute(mRecipe);
-
 
      }
 
@@ -97,8 +91,33 @@ import com.squareup.picasso.Picasso;
 
          @Override
          protected void onPostExecute(String returnMessage) {
-             Intent intent = new Intent(RecipeActivity.this, HomeScreenActivity.class);
+             Intent intent = new Intent(RecipeActivity.this, RecipeGroupActivity.class);
              startActivity(intent);
          }
      }
-}
+
+
+     public void mEditRecipeButtonOnClick (View v){
+
+         AsyncTask task = new RecipeActivity.EditRecipeTask().execute(mRecipe);
+
+     }
+     private class EditRecipeTask extends AsyncTask<Recipe, Void, Recipe> {
+
+         @Override
+         protected Recipe doInBackground(Recipe... params ){
+             return params[0];
+         }
+
+         @Override
+         protected void onPostExecute(Recipe recipeToEdit) {
+             Intent intent = new Intent(RecipeActivity.this, UploadRecipeActivity.class);
+             Long recipeToEditId = recipeToEdit.getId();
+             intent.putExtra("operation",  recipeToEditId);
+
+             startActivity(intent);
+         }
+     }
+
+
+ }

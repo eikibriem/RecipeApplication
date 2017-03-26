@@ -17,6 +17,8 @@ import com.example.helen_000.recipeapplication.Entities.LoginUser;
 import com.example.helen_000.recipeapplication.Entities.Recipe;
 import com.example.helen_000.recipeapplication.Entities.RecipeGroup;
 import com.example.helen_000.recipeapplication.R;
+import com.example.helen_000.recipeapplication.RecipeDelete;
+import com.example.helen_000.recipeapplication.RecipeFetch;
 import com.example.helen_000.recipeapplication.RecipeFetchId;
 import com.example.helen_000.recipeapplication.RecipeGroupFetch;
 import com.example.helen_000.recipeapplication.RecipeSave;
@@ -46,7 +48,6 @@ import java.util.List;
 public class UploadRecipeActivity extends AppCompatActivity implements Validator.ValidationListener{
 
     private static final String TAG = "CreateRecipe";
-    private Long message;
 
     @NotEmpty
     private EditText recipeNameEdit;
@@ -57,18 +58,34 @@ public class UploadRecipeActivity extends AppCompatActivity implements Validator
     private EditText instructionsEdit;
     @NotEmpty
     private EditText imageEdit;
-
+    private Long message;
+    private Long operationId;
     private Validator validator;
 
+    private ArrayAdapter<String> adapter;
+
+    private String operation = "createRecipe";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = getIntent().getExtras(); //getting the id of the recipe from the recipeListActivity
+        message = bundle.getLong("message"); //getting the id of the recipe from the recipeListActivity/UploadRecipeActivity
+        operationId = bundle.getLong("operation"); //check if you are editing or saving a new recipe
+
+        Log.d(TAG, "hér er id-ið á recipe-inu: " + operation);
+
+
+
+
         setContentView(R.layout.activity_upload_recipe);
         Spinner dropdown = (Spinner)findViewById(R.id.spinnerRecipeGroup);
         String[] items = new String[]{"appetizers", "baking", "breakfast", "dinner", "dessert", "raw"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+        Log.d(TAG, "aloha2");
 
         this.validator = new Validator(this);
         this.validator.setValidationListener(this);
@@ -77,10 +94,27 @@ public class UploadRecipeActivity extends AppCompatActivity implements Validator
         this.ingredientsEdit = (EditText) findViewById(R.id.editTextIngredients);
         this.instructionsEdit = (EditText) findViewById(R.id.editTextInstructions);
         this.imageEdit = (EditText) findViewById(R.id.editTextImage);
+        Log.d(TAG, "aloha3");
+
+
+
+
+        //Yes if you are editing a recipe
+        if (operationId != 0L){
+            operation = "editRecipe";
+            Log.d(TAG, "aloha10");
+
+            AsyncTask task = new UploadRecipeActivity.SendRecipeEditDeviceDetails().execute();
+            Log.d(TAG, "aloha11");
+
+            //Get position of spinner element
+
+
+        }
 
 
     }
-
+/*
     public String getRecipeName(View v){
         EditText recipeName = (EditText) findViewById(R.id.editTextRecipeName);
         String recipeNameValue = recipeName.getText().toString();
@@ -126,12 +160,35 @@ public class UploadRecipeActivity extends AppCompatActivity implements Validator
         return imageValue;
 
     }
+*/
+    public void mButtonSaveRecipeOnClick (View v){validator.validate();}
 
-    public void mButtonSaveRecipeOnClick (View v){
-        validator.validate();
+
+
+    /*
+        Retrieves the recipe that you want to edit
+     */
+    private class SendRecipeEditDeviceDetails extends AsyncTask<Void, Void, Recipe> {
+        @Override
+        protected Recipe doInBackground(Void... params) {
+            Recipe recipeToEdit = new RecipeFetch().fetchRecipe(operationId);
+            return recipeToEdit;
+        }
+
+        @Override
+        protected void onPostExecute(Recipe recipeToEdit) {
+
+            String recipeGroup = recipeToEdit.getRecipeGroup();
+            int selectionPosition= adapter.getPosition(recipeGroup);
+
+            //Set the saved values of the recipe in the text views for the user to change
+            recipeNameEdit.setText(recipeToEdit.getRecipeName());
+            recipeGroupEdit.setSelection(selectionPosition);
+            ingredientsEdit.setText(recipeToEdit.getIngredients());
+            instructionsEdit.setText(recipeToEdit.getInstructions());
+            imageEdit.setText(recipeToEdit.getImage());
+        }
     }
-
-
 
 
     private class SendRecipeDeviceDetails extends AsyncTask<Recipe, Void, String> {
@@ -224,16 +281,17 @@ public class UploadRecipeActivity extends AppCompatActivity implements Validator
 
     @Override
     public void onValidationSucceeded() {
+        if(operation == "editRecipe"){
+            AsyncTask task = new UploadRecipeActivity.DeleteRecipeTask().execute();
+        }
         Recipe recipe = new Recipe();
         recipe.setRecipeName(recipeNameEdit.getText().toString());
         recipe.setRecipeGroup(recipeGroupEdit.getSelectedItem().toString());
         recipe.setIngredients(ingredientsEdit.getText().toString());
         recipe.setInstructions(instructionsEdit.getText().toString());
         recipe.setImage(imageEdit.getText().toString());
-
         String loggedInUser = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).getString("userName", "No logged in user");
         recipe.setUsername(loggedInUser);
-
         new SendRecipeDeviceDetails().execute(recipe);
     }
 
@@ -249,6 +307,23 @@ public class UploadRecipeActivity extends AppCompatActivity implements Validator
             } else {
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+
+
+    private class DeleteRecipeTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params ){
+            String returnMessage = new RecipeDelete().deleteRecipe(operationId);
+            return returnMessage;
+        }
+
+        @Override
+        protected void onPostExecute(String returnMessage) {
+            Intent intent = new Intent(UploadRecipeActivity.this, RecipeGroupActivity.class);
+            startActivity(intent);
         }
     }
 
