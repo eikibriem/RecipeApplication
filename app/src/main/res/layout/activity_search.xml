@@ -10,4 +10,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.helen_000.recipeapplication.Activities.SearchActivity">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="Search"
+        android:id="@+id/editTextSearch"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:text="Search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:id="@+id/mButtonSearch"
+        android:layout_below="@+id/editTextSearch"
+        android:layout_centerHorizontal="true"
+        android:onClick="mButtonSearchOnClick" />
+
 </RelativeLayout>

@@ -75,7 +75,7 @@ public class UploadRecipeActivity extends AppCompatActivity implements Validator
         message = bundle.getLong("message"); //getting the id of the recipe from the recipeListActivity/UploadRecipeActivity
         operationId = bundle.getLong("operation"); //check if you are editing or saving a new recipe
 
-        Log.d(TAG, "hér er id-ið á recipe-inu: " + operation);
+        Log.d(TAG, "hér er id-ið á recipe-inu: " + message);
 
 
 
@@ -275,8 +275,9 @@ public class UploadRecipeActivity extends AppCompatActivity implements Validator
 
     @Override
     public void onValidationSucceeded() {
-        if(operation == "editRecipe"){
+        if(operation.equals("editRecipe")){
             AsyncTask task = new UploadRecipeActivity.DeleteRecipeTask().execute();
+
         }
         Recipe recipe = new Recipe();
         recipe.setRecipeName(recipeNameEdit.getText().toString());

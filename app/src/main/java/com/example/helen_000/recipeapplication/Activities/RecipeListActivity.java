@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.helen_000.recipeapplication.Entities.Recipe;
 import com.example.helen_000.recipeapplication.R;
 import com.example.helen_000.recipeapplication.RecipesListFetch;
+import com.example.helen_000.recipeapplication.SearchRecipeListFetch;
 import com.example.helen_000.recipeapplication.YourRecipesListFetch;
 
 import java.util.ArrayList;
@@ -22,8 +23,9 @@ import java.util.List;
 
 public class RecipeListActivity extends AppCompatActivity {
 
-    private static final String TAG = "MyActivity";
+    private static final String TAG = "RecipeListActivity";
     private String message;
+    private String searchMessage;
     private String loggedInUser;
     boolean ContainsRecipeGroupInfo;
 
@@ -34,6 +36,12 @@ public class RecipeListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_list);
         Bundle bundle = getIntent().getExtras();
         message = bundle.getString("message");
+        searchMessage = bundle.getString("searchMessage");
+
+        if(searchMessage != null){
+            AsyncTask task = new FetchSearchTask().execute();
+            return;
+        }
 
         //Athugum hvort verið er að leita eftir notanda eða recipeGroup
         ContainsRecipeGroupInfo = messageContainsRecipeGroup(message);
@@ -128,6 +136,50 @@ public class RecipeListActivity extends AppCompatActivity {
         protected List<Recipe> doInBackground(String... params ){
             Log.d(TAG, "User: " + message);
             List<Recipe> recipes = new YourRecipesListFetch().fetchRecipeList(message);
+            return recipes;
+        }
+
+        @Override
+        protected void onPostExecute(List<Recipe> recipes) {
+            mRecipes = recipes;
+
+            Log.d(TAG, "Fjöldi niðurstaða: " + recipes.size());
+
+            Button[] myButtons = new Button[recipes.size()];
+
+            LinearLayout myLayout = (LinearLayout) findViewById(R.id.linear);
+
+            for(int i = 0; i < recipes.size(); i++){
+                myButtons[i] = new Button(RecipeListActivity.this);
+                Log.d(TAG, "Hér er ég: " + mRecipes.get(i).getRecipeName());
+                myButtons[i].setText(mRecipes.get(i).getRecipeName());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(20, 0, 20, 20); // (left, top, right, bottom)
+                myButtons[i].setLayoutParams(lp);
+
+                final Long recipeId = mRecipes.get(i).getId();
+
+                myButtons[i].setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(RecipeListActivity.this, RecipeActivity.class);
+                        Long message = recipeId;
+                        intent.putExtra("message",  message);
+                        startActivity(intent);
+                    }
+                });
+
+                myLayout.addView(myButtons[i]);
+
+            }
+        }
+    }
+
+    private class FetchSearchTask extends AsyncTask<String, Void, List<Recipe>>{
+        @Override
+        protected List<Recipe> doInBackground(String... params ){
+            Log.d(TAG, "SearchString: " + searchMessage);
+
+            List<Recipe> recipes = new SearchRecipeListFetch().fetchRecipeList(searchMessage);
             return recipes;
         }
 
