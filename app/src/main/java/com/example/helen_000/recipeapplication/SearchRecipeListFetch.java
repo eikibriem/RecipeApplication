@@ -103,8 +103,6 @@ public class SearchRecipeListFetch {
                 recipe.setUsername(groupJsonObject.getString("username"));
                 recipe.setInstructions(groupJsonObject.getString("instructions"));
                 recipe.setImage(groupJsonObject.getString("image"));
-                //recipe.setRate(groupJsonObject.getFloat("rate"));
-
                 recipeList.add(recipe);
             }
 

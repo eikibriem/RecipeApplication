@@ -1,12 +1,14 @@
 package com.example.helen_000.recipeapplication.Activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.example.helen_000.recipeapplication.R;
 import com.example.helen_000.recipeapplication.RecipesListFetch;
 import com.example.helen_000.recipeapplication.SearchRecipeListFetch;
 import com.example.helen_000.recipeapplication.YourRecipesListFetch;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,8 +67,8 @@ public class RecipeListActivity extends AppCompatActivity {
 
         List<String> recipeGroups = new ArrayList<String>();
         recipeGroups.add(0, "appetizers");
-        recipeGroups.add(1, "dinner");
-        recipeGroups.add(2, "dessert");
+        recipeGroups.add(1, "dinners");
+        recipeGroups.add(2, "desserts");
         recipeGroups.add(3, "raw");
         recipeGroups.add(4, "breakfast");
         recipeGroups.add(5, "baking");
@@ -95,17 +98,33 @@ public class RecipeListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Recipe> recipes) {
             mRecipes = recipes;
-
-            Button[] myButtons = new Button[recipes.size()];
-
             LinearLayout myLayout = (LinearLayout) findViewById(R.id.linear);
 
-            for(int i = 0; i < recipes.size(); i++){
-                myButtons[i] = new Button(RecipeListActivity.this);
-
-                myButtons[i].setText(mRecipes.get(i).getRecipeName());
+            if (recipes.size() == 0){
+                TextView textView = new TextView(RecipeListActivity.this);
+                textView.setText("No recipes");
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.setMargins(20, 0, 20, 20); // (left, top, right, bottom)
+                textView.setLayoutParams(lp);
+                myLayout.addView(textView);
+            }
+
+            ImageView[] myRecipesImages = new ImageView[recipes.size()];
+            Button[] myButtons = new Button[recipes.size()];
+
+
+
+            for(int i = 0; i < recipes.size(); i++){
+
+                myRecipesImages[i] = new ImageView(RecipeListActivity.this);
+                myButtons[i] = new Button(RecipeListActivity.this);
+
+                Picasso.with(RecipeListActivity.this).load(mRecipes.get(i).getImage()).into(myRecipesImages[i]);
+                myButtons[i].setText(mRecipes.get(i).getRecipeName());
+
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(20, 0, 20, 20); // (left, top, right, bottom)
+                myRecipesImages[i].setLayoutParams(lp);
                 myButtons[i].setLayoutParams(lp);
 
                 final Long recipeId = mRecipes.get(i).getId();
@@ -119,6 +138,16 @@ public class RecipeListActivity extends AppCompatActivity {
                     }
                 });
 
+                myRecipesImages[i].setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(RecipeListActivity.this, RecipeActivity.class);
+                        Long message = recipeId;
+                        intent.putExtra("message",  message);
+                        startActivity(intent);
+                    }
+                });
+
+                myLayout.addView(myRecipesImages[i]);
                 myLayout.addView(myButtons[i]);
 
             }
@@ -142,19 +171,33 @@ public class RecipeListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Recipe> recipes) {
             mRecipes = recipes;
-
-            Log.d(TAG, "Fjöldi niðurstaða: " + recipes.size());
-
-            Button[] myButtons = new Button[recipes.size()];
-
             LinearLayout myLayout = (LinearLayout) findViewById(R.id.linear);
 
-            for(int i = 0; i < recipes.size(); i++){
-                myButtons[i] = new Button(RecipeListActivity.this);
-                Log.d(TAG, "Hér er ég: " + mRecipes.get(i).getRecipeName());
-                myButtons[i].setText(mRecipes.get(i).getRecipeName());
+            if (recipes.size() == 0){
+                TextView textView = new TextView(RecipeListActivity.this);
+                textView.setText("No recipes");
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.setMargins(20, 0, 20, 20); // (left, top, right, bottom)
+                textView.setLayoutParams(lp);
+                myLayout.addView(textView);
+            }
+
+            ImageView[] myRecipesImages = new ImageView[recipes.size()];
+            Button[] myButtons = new Button[recipes.size()];
+
+
+
+            for(int i = 0; i < recipes.size(); i++){
+
+                myRecipesImages[i] = new ImageView(RecipeListActivity.this);
+                myButtons[i] = new Button(RecipeListActivity.this);
+
+                Picasso.with(RecipeListActivity.this).load(mRecipes.get(i).getImage()).into(myRecipesImages[i]);
+                myButtons[i].setText(mRecipes.get(i).getRecipeName());
+
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(20, 0, 20, 20); // (left, top, right, bottom)
+                myRecipesImages[i].setLayoutParams(lp);
                 myButtons[i].setLayoutParams(lp);
 
                 final Long recipeId = mRecipes.get(i).getId();
@@ -168,6 +211,16 @@ public class RecipeListActivity extends AppCompatActivity {
                     }
                 });
 
+                myRecipesImages[i].setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(RecipeListActivity.this, RecipeActivity.class);
+                        Long message = recipeId;
+                        intent.putExtra("message",  message);
+                        startActivity(intent);
+                    }
+                });
+
+                myLayout.addView(myRecipesImages[i]);
                 myLayout.addView(myButtons[i]);
 
             }
@@ -186,19 +239,33 @@ public class RecipeListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Recipe> recipes) {
             mRecipes = recipes;
-
-            Log.d(TAG, "Fjöldi niðurstaða: " + recipes.size());
-
-            Button[] myButtons = new Button[recipes.size()];
-
             LinearLayout myLayout = (LinearLayout) findViewById(R.id.linear);
 
-            for(int i = 0; i < recipes.size(); i++){
-                myButtons[i] = new Button(RecipeListActivity.this);
-                Log.d(TAG, "Hér er ég: " + mRecipes.get(i).getRecipeName());
-                myButtons[i].setText(mRecipes.get(i).getRecipeName());
+            if (recipes.size() == 0){
+                TextView textView = new TextView(RecipeListActivity.this);
+                textView.setText("No recipes");
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.setMargins(20, 0, 20, 20); // (left, top, right, bottom)
+                textView.setLayoutParams(lp);
+                myLayout.addView(textView);
+            }
+
+            ImageView[] myRecipesImages = new ImageView[recipes.size()];
+            Button[] myButtons = new Button[recipes.size()];
+
+
+
+            for(int i = 0; i < recipes.size(); i++){
+
+                myRecipesImages[i] = new ImageView(RecipeListActivity.this);
+                myButtons[i] = new Button(RecipeListActivity.this);
+
+                Picasso.with(RecipeListActivity.this).load(mRecipes.get(i).getImage()).into(myRecipesImages[i]);
+                myButtons[i].setText(mRecipes.get(i).getRecipeName());
+
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(20, 0, 20, 20); // (left, top, right, bottom)
+                myRecipesImages[i].setLayoutParams(lp);
                 myButtons[i].setLayoutParams(lp);
 
                 final Long recipeId = mRecipes.get(i).getId();
@@ -212,6 +279,16 @@ public class RecipeListActivity extends AppCompatActivity {
                     }
                 });
 
+                myRecipesImages[i].setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent intent = new Intent(RecipeListActivity.this, RecipeActivity.class);
+                        Long message = recipeId;
+                        intent.putExtra("message",  message);
+                        startActivity(intent);
+                    }
+                });
+
+                myLayout.addView(myRecipesImages[i]);
                 myLayout.addView(myButtons[i]);
 
             }
