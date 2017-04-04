@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,65 +16,72 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.helen_000.recipeapplication.Activities.RecipeGroupActivity">
 
+
     <Button
         android:text="Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mButtonAppetizers"
+        android:onClick="mButtonAppetizersButtonOnClick"
+        android:layout_marginTop="13dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="mButtonAppetizersButtonOnClick"/>
-
-    <Button
-        android:text="Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mButtonBaking"
-        android:layout_below="@+id/mButtonAppetizers"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="mButtonBakingButtonOnClick"/>
-
-    <Button
-        android:text="Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mButtonBreakfast"
-        android:layout_below="@+id/mButtonBaking"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="mButtonBreakfastButtonOnClick"/>
-
-    <Button
-        android:text="Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mButtonDinner"
-        android:layout_below="@+id/mButtonBreakfast"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="mButtonDinnerButtonOnClick"/>
-
-    <Button
-        android:text="Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mButtonDessert"
-        android:layout_below="@+id/mButtonDinner"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="mButtonDessertButtonOnClick"/>
-
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mButtonRaw"
+        android:onClick="mButtonRawButtonOnClick"
+        android:layout_marginTop="16dp"
         android:layout_below="@+id/mButtonDessert"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="mButtonRawButtonOnClick"/>
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mButtonDessert"
+        android:onClick="mButtonDessertButtonOnClick"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/mButtonDinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mButtonDinner"
+        android:onClick="mButtonDinnerButtonOnClick"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/mButtonBreakfast"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mButtonBreakfast"
+        android:onClick="mButtonBreakfastButtonOnClick"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/mButtonBaking"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mButtonBaking"
+        android:onClick="mButtonBakingButtonOnClick"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/mButtonAppetizers"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
+</ScrollView>

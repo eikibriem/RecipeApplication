@@ -24,7 +24,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/titleColor"
+        android:gravity="center"
+        android:textStyle="bold"/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -45,17 +48,6 @@
         android:layout_below="@+id/mDeleteRecipe"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Instructions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewInstructionsCaption"
-        android:textStyle="bold"
-        android:layout_below="@+id/textViewIngredients"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="58dp" />
 
     <TextView
         android:text="TextView"
@@ -96,7 +88,8 @@
         android:id="@+id/textViewIngredients"
         android:layout_below="@+id/textViewIngredientsCaption"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        />
 
     <TextView
         android:text="Ingredients"
@@ -104,8 +97,21 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewIngredientsCaption"
         android:textStyle="bold"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="53dp"
+        android:textSize="@dimen/activity_horizontal_margin"
         android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewInstructionsCaption"
+        android:textStyle="bold"
+        android:layout_marginTop="51dp"
+        android:textSize="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/textViewIngredients"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 </RelativeLayout>
